@@ -9,10 +9,10 @@ import time
 
 from opencv_utils import get_cam, display_frame, create_directory, get_writer
 
-WIDTH = 1280
-HEIGHT = 720
-FRAME_SIZE = (WIDTH, HEIGHT)
+FRAME_SIZE = (640, 480) # Stick with this figure! (1280, 720) doesn't seem to work!
 
+directory_name: str = 'videos'
+video_name: str = 'test'
 
 def record_video(directory_name: str, video_name: str) -> None:
     """
@@ -22,31 +22,37 @@ def record_video(directory_name: str, video_name: str) -> None:
     create_directory(directory_name)
 
     # Get camera
-    cam = get_cam()
+    cam = cv2.VideoCapture(0)
 
     # Get writer
-    writer = get_writer(file_name=f'{directory_name}/{video_name}.avi', frame_size=FRAME_SIZE)
+    writer = cv2.VideoWriter('test.avi', cv2.VideoWriter_fourcc(*'XVID'), 20.0, (640, 480))
 
+    count = 0
 
-    # Check if camera opened successfully
     if cam.isOpened():
         print('Camera opened successfully')
-
-        while True:
+        while(True):
 
             # start timer for FPS calculation
-            start_time = time.time()
+            # start_time = time.time()
 
             ret_val, frame = cam.read()
 
-            print("Camera read FPS: ", 1.0 / (time.time() - start_time))
+            # print("Camera read FPS: ", 1.0 / (time.time() - start_time))
 
             if not ret_val:
                 print('Error reading frame')
                 break
 
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+            # cv2.imshow("frame", frame)
+
             writer.write(frame)
-            print("Video writer FPS: ", 1.0 / (time.time() - start_time))
+            # print("Video writer FPS: ", 1.0 / (time.time() - start_time))
+
+            if cv2.waitKey(1) & 0xFF == ord('a'):
+                break
     else:
         print('Error opening camera')
         exit()
@@ -58,6 +64,5 @@ def record_video(directory_name: str, video_name: str) -> None:
 
 
 if __name__ == '__main__':
-    record_video('videos', 'test_video')
-
+    record_video(directory_name, video_name)
 
