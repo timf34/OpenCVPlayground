@@ -46,10 +46,15 @@ def record_video(directory_name: str, video_name: str) -> None:
                 break
 
             writer.write(frame)
-            # print("Video writer FPS: ", 1.0 / (time.time() - start_time))
+            print("Video writer FPS: ", 1.0 / (time.time() - start_time))
     else:
         print('Error opening camera')
         exit()
+
+    # Close the camera
+    cam.release()
+    writer.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == '__main__':
