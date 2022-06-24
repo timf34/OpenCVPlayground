@@ -4,18 +4,7 @@ import numpy as np
 import multiprocessing as mp
 import time
 
-from opencv_utils import get_cam, get_frame, display_frame
-
-
-def create_directory(directory_name: str) -> None:
-    """
-        This function creates a directory
-    """
-    if not os.path.exists(directory_name):
-        os.makedirs(directory_name)
-        print('Directory created successfully')
-    else:
-        print('Directory already exists')
+from opencv_utils import get_cam, get_frame, display_frame, create_directory
 
 
 def basic_image_capture(directory_name: str, video_name: str) -> None:

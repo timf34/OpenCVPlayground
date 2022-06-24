@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 
 def get_cam() -> cv2.VideoCapture:
     """
@@ -22,3 +23,14 @@ def display_frame(frame: np.ndarray, delay: int = 0) -> None:
     """
     cv2.imshow('frame', frame)
     cv2.waitKey(delay)
+
+
+def create_directory(directory_name: str) -> None:
+    """
+        This function creates a directory
+    """
+    if not os.path.exists(directory_name):
+        os.makedirs(directory_name)
+        print('Directory created successfully')
+    else:
+        print('Directory already exists')
