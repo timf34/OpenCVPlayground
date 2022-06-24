@@ -18,14 +18,6 @@ def get_writer(frame_size: Tuple[int, int], file_name: str = 'test.avi', fps: in
     return cv2.VideoWriter(file_name, cv2.VideoWriter_fourcc(*'XVID'), fps, frame_size)
 
 
-def get_frame(cam: cv2.VideoCapture) -> np.ndarray:
-    """
-        This function gets a frame from the camera and returns it
-    """
-    ret_val, frame = cam.read()
-    return frame
-
-
 def display_frame(frame: np.ndarray, delay: int = 0) -> None:
     """
         This function displays the frame
